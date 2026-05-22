@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Gol nas Nuvens | Futebol & Emoção</title>
+    <!-- Font Awesome 6 (gratuito) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: esportivo e moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(145deg, #0b1a2e 0%, #07121f 100%);
+            color: #f0f4fa;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* nuvens animadas (background efeito) */
+        .cloud-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(2px);
+            border-radius: 1000px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: floatCloud linear infinite;
+        }
+
+        @keyframes floatCloud {
+            0% {
+                transform: translateX(-20%) translateY(0px);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateX(calc(100vw + 30%)) translateY(-30px);
+                opacity: 0;
+            }
+        }
+
+        /* header */
+        header {
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(5, 15, 25, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo i {
+            font-size: 2.3rem;
+            color: #ffd966;
+            filter: drop-shadow(0 0 5px #ffb347);
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #FFE6B0, #FFB347);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links a {
+            color: #eef2ff;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 1rem;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            border-bottom-color: #ffb347;
+            color: #ffda88;
+        }
+
+        /* hero section */
+        .hero {
+            text-align: center;
+            padding: 4rem 1.5rem 5rem;
+            background: radial-gradient(circle at 20% 30%, rgba(255, 180, 70, 0.15), transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 i {
+            color: #ffc857;
+            margin-right: 12px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: rgba(255, 200, 100, 0.15);
+            border: 1px solid #ffc857;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: bold;
+            color: #ffeaac;
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 1rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(95deg, #ffb347, #ff8c1a);
+            border: none;
+            color: #0a111f;
+            box-shadow: 0 8px 18px rgba(255, 140, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            background: linear-gradient(95deg, #ffa41f, #ff7700);
+            box-shadow: 0 12px 22px rgba(255, 100, 0, 0.4);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 200, 100, 0.3);
+            border-color: #ffdd88;
+            color: white;
+        }
+
+        /* destaques e noticias */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 6px solid #ffb347;
+            padding-left: 20px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: rgba(20, 35, 55, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 200, 100, 0.2);
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #ffb34770;
+            background: rgba(25, 45, 70, 0.8);
+        }
+
+        .card-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 12px;
+        }
+
+        .badge {
+            background: #ff9f2e;
+            color: #0a1422;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content p {
+            color: #cdd9ff;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: #ffc857;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Tabela de classificação */
+        .tabela-wrapper {
+            overflow-x: auto;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 28px;
+            padding: 0.5rem;
+            backdrop-filter: blur(4px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 14px 8px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 200, 100, 0.2);
+        }
+
+        th {
+            color: #ffda88;
+            font-weight: 600;
+            background: rgba(0,0,0,0.3);
+        }
+
+        tr:hover td {
+            background: rgba(255, 195, 90, 0.08);
+        }
+
+        .time-nome {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: flex-start;
+            padding-left: 12px;
+        }
+
+        /* formulário contato */
+        .contact-area {
+            background: linear-gradient(120deg, #071a2b, #0a1e30);
+            border-radius: 36px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: rgba(255,255,240,0.1);
+            border: 1px solid #ffc85770;
+            padding: 14px 18px;
+            border-radius: 48px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        textarea {
+            border-radius: 28px;
+            resize: vertical;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #ffb347;
+            background: rgba(0,0,0,0.4);
+            box-shadow: 0 0 8px #ffb34760;
+        }
+
+        button[type="submit"] {
+            background: #ffb347;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: bold;
+            color: #0a1422;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255,215,0,0.2);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .social-icons a {
+            color: #ffd966;
+            margin: 0 12px;
+            font-size: 1.4rem;
+            transition: 0.2s;
+        }
+
+        .social-icons a:hover {
+            color: #ffaa33;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .nav-links a {
+                margin: 0 1rem;
+            }
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            .section-title {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cloud-bg" id="cloudContainer"></div>
+
+<header>
+    <div class="logo">
+        <i class="fas fa-futbol"></i>
+        <span>Gol nas Nuvens</span> <i class="fas fa-cloud" style="font-size: 1.3rem; color:#b9dcff;"></i>
+    </div>
+    <div class="nav-links">
+        <a href="#" class="active" id="navHome">Início</a>
+        <a href="#" id="navNoticias">Notícias</a>
+        <a href="#" id="navClassificacao">Classificação</a>
+        <a href="#" id="navContato">Contato</a>
+    </div>
+</header>
+
+<main>
+    <!-- Seção Hero (início) -->
+    <section id="heroSection" class="hero">
+        <h1><i class="fas fa-cloud-sun"></i> Gol nas Nuvens <i class="fas fa-futbol"></i></h1>
+        <p>O futebol que transcende o campo, com notícias, emoção e lances de tirar o fôlego. Do céu ao gramado, a paixão não tem limite.</p>
+        <div class="btn-group">
+            <a href="#" class="btn btn-primary" id="btnExplorar"><i class="fas fa-newspaper"></i> Últimas Notícias</a>
+            <a href="#" class="btn btn-outline" id="btnVerJogos"><i class="fas fa-chart-line"></i> Tabela</a>
+        </div>
+    </section>
+
+    <!-- Seção Notícias (dinâmica) -->
+    <section id="noticiasSection" class="section">
+        <div class="section-title">
+            <i class="fas fa-cloud-moon"></i> 
+            <span>⚡ Notícias do Firmamento Esportivo</span>
+        </div>
+        <div class="cards-grid" id="noticiasContainer">
+            <!-- as notícias serão carregadas via JS -->
+        </div>
+    </section>
+
+    <!-- Seção Classificação (tabela) -->
+    <section id="classificacaoSection" class="section" style="display: none;">
+        <div class="section-title">
+            <i class="fas fa-trophy"></i> 
+            <span>📊 Classificação - Campeonato Gol nas Nuvens</span>
+        </div>
+        <div class="tabela-wrapper">
+            <table id="tabelaTimes">
+                <thead>
+                    <tr><th>Pos</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>E</th><th>D</th><th>GP</th><th>GC</th><th>SG</th></tr>
+                </thead>
+                <tbody id="tabelaBody">
+                    <!-- JS preenche -->
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-top: 2rem; text-align: center; font-style: italic;">
+            <i class="fas fa-cloud-rain"></i> Dados atualizados — Rodada celestial
+        </div>
+    </section>
+
+    <!-- Seção Contato -->
+    <section id="contatoSection" class="section" style="display: none;">
+        <div class="section-title">
+            <i class="fas fa-envelope-open-text"></i>
+            <span>✉️ Entre em contato com a Nuvem</span>
+        </div>
+        <div class="contact-area">
+            <form id="formContato">
+                <div class="form-group">
+                    <input type="text" placeholder="Seu nome" id="nomeContato" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="E-mail para contato" id="emailContato" required>
+                </div>
+                <div class="form-group">
+                    <textarea rows="4" placeholder="Sua mensagem para o Gol nas Nuvens..." id="msgContato" required></textarea>
+                </div>
+                <button type="submit"><i class="fas fa-paper-plane"></i> Enviar mensagem nas nuvens</button>
+                <p id="formFeedback" style="margin-top: 16px; font-size:0.85rem; color:#ffda88;"></p>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+    </div>
+    <p style="margin-top: 18px;">© 2025 Gol nas Nuvens — onde cada gol ecoa nas alturas. ⚽☁️</p>
+    <p>Projeto criado para celebrar o futebol, paixão sem fronteiras.</p>
+</footer>
+
+<script>
+    // ---------------------- NUVENS ANIMADAS -----------------------
+    function criarNuvens() {
+        const container = document.getElementById('cloudContainer');
+        const nuvemCount = 18;
+        for (let i = 0; i < nuvemCount; i++) {
+            const nuvem = document.createElement('div');
+            nuvem.classList.add('cloud');
+            const size = 60 + Math.random() * 150;
+            nuvem.style.width = size + 'px';
+            nuvem.style.height = (size * 0.6) + 'px';
+            nuvem.style.top = Math.random() * 100 + '%';
+            nuvem.style.left = -200 + 'px';
+            nuvem.style.animationDuration = 15 + Math.random() * 25 + 's';
+            nuvem.style.animationDelay = Math.random() * 20 + 's';
+            nuvem.style.opacity = 0.15 + Math.random() * 0.3;
+            container.appendChild(nuvem);
+        }
+    }
+    criarNuvens();
+
+    // dados estáticos: notícias
+    const noticiasData = [
+        {
+            titulo: "⚡ Craque das Nuvens marca hat-trick em noite de chuva de gols",
+            resumo: "Atacante estrela comanda vitória épica e garante show no estádio flutuante. Torcida fez 'ola' nas arquibancadas virtuais.",
+            img: "https://images.unsplash.com/photo-1522778119026-d647f0598c96?w=500&h=300&fit=crop",
+            badge: "Destaque"
+        },
+        {
+            titulo: "☁️ Gol nas Nuvens anuncia parceria com liga europeia de futebol",
+            resumo: "Empresa inova e leva tecnologia de análise de jogadas para as nuvens. Novidades em breve!",
+            img: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=500&h=300&fit=crop",
+            badge: "Mercado"
+        },
+        {
+            titulo: "🌧️ Choque de titãs: decisão do campeonato terá transmissão imersiva",
+            resumo: "Final entre Nuvem United e Raio FC promete 90 minutos de emoção. Ingressos virtuais esgotados.",
+            img: "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=500&h=300&fit=crop",
+            badge: "Prévia"
+        },
+        {
+            titulo: "🎯 Jovem promessa do futebol de várzea é observada por olheiros",
+            resumo: "Aos 17 anos, atacante já é comparada a grandes nomes. 'Quero brilhar nas nuvens', declarou.",
+            img: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500&h=300&fit=crop",
+            badge: "Revelação"
+        }
+    ];
+
+    // Classificação: 8 times criativos
+    const timesTabela = [
+        { nome: "☁️ Nuvem United", pts: 28, j: 12, v: 9, e: 1, d: 2, gp: 27, gc: 12 },
+        { nome: "⚡ Raio FC", pts: 26, j: 12, v: 8, e: 2, d: 2, gp: 31, gc: 14 },
+        { nome: "🌪️ Tornados", pts: 21, j: 12, v: 6, e: 3, d: 3, gp: 19, gc: 15 },
+        { nome: "🌈 Arco-Íris SC", pts: 19, j: 12, v: 5, e: 4, d: 3, gp: 22, gc: 18 },
+        { nome: "⛅ Brisa Celeste", pts: 15, j: 12, v: 4, e: 3, d: 5, gp: 17, gc: 20 },
+        { nome: "🌧️ Garoa Molhada", pts: 12, j: 12, v: 3, e: 3, d: 6, gp: 13, gc: 21 },
+        { nome: "💨 Vendaval", pts: 7, j: 12, v: 2, e: 1, d: 9, gp: 9, gc: 27 },
+        { nome: "🌫️ Neblina FF", pts: 4, j: 12, v: 1, e: 1, d: 10, gp: 8, gc: 31 }
+    ];
+
+    // ordenar por pontos
+    function ordenarTabela(arr) {
+        return [...arr].sort((a,b) => b.pts - a.pts);
+    }
+
+    function renderTabela() {
+        const ordenado = ordenarTabela(timesTabela);
+        const tbody = document.getElementById('tabelaBody');
+        tbody.innerHTML = '';
+        ordenado.forEach((time, idx) => {
+            const row = tbody.insertRow();
+            const sg = time.gp - time.gc;
+            row.insertCell(0).innerText = idx+1;
+            const cellTime = row.insertCell(1);
+            cellTime.innerHTML = `<div class="time-nome">${time.nome}</div>`;
+            row.insertCell(2).innerText = time.pts;
+            row.insertCell(3).innerText = time.j;
+            row.insertCell(4).innerText = time.v;
+            row.insertCell(5).innerText = time.e;
+            row.insertCell(6).innerText = time.d;
+            row.insertCell(7).innerText = time.gp;
+            row.insertCell(8).innerText = time.gc;
+            row.insertCell(9).innerText = sg;
+        });
+    }
+
+    // render notícias
+    function renderNoticias() {
+        const container = document.getElementById('noticiasContainer');
+        if(!container) return;
+        container.innerHTML = '';
+        noticiasData.forEach(noticia => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-img" style="background-image: url('${noticia.img}'); background-size: cover;">
+                    <div class="badge">${noticia.badge}</div>
+                </div>
+                <div class="card-content">
+                    <h3>${noticia.titulo}</h3>
+                    <p>${noticia.resumo}</p>
+                    <a href="#" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+        // todos os "ler mais" só alerta
+        document.querySelectorAll('.read-more').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert("⚽📰 Em breve mais detalhes! Acompanhe Gol nas Nuvens.");
+            });
+        });
+    }
+
+    // controle de abas / navegação
+    const heroSection = document.getElementById('heroSection');
+    const noticiasSec = document.getElementById('noticiasSection');
+    const classificacaoSec = document.getElementById('classificacaoSection');
+    const contatoSec = document.getElementById('contatoSection');
+
+    function showSection(sectionToShow, updateHero = false) {
+        // esconder todas as seções extras, mas hero especial
+        if(sectionToShow !== 'hero') {
+            heroSection.style.display = 'none';
+        } else {
+            heroSection.style.display = 'block';
+        }
+        noticiasSec.style.display = sectionToShow === 'noticias' ? 'block' : 'none';
+        classificacaoSec.style.display = sectionToShow === 'classificacao' ? 'block' : 'none';
+        contatoSec.style.display = sectionToShow === 'contato' ? 'block' : 'none';
+        
+        // pequeno ajuste se hero tiver de ser mostrado
+        if(sectionToShow === 'hero') {
+            heroSection.style.display = 'block';
+        }
+        // atualizar classe ativa nos links
+        const links = document.querySelectorAll('.nav-links a');
+        links.forEach(link => link.classList.remove('active'));
+        if(sectionToShow === 'hero') document.getElementById('navHome')?.classList.add('active');
+        if(sectionToShow === 'noticias') document.getElementById('navNoticias')?.classList.add('active');
+        if(sectionToShow === 'classificacao') document.getElementById('navClassificacao')?.classList.add('active');
+        if(sectionToShow === 'contato') document.getElementById('navContato')?.classList.add('active');
+    }
+
+    // Eventos dos botões de navegação
+    document.getElementById('navHome')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection('hero');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+    document.getElementById('navNoticias')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection('noticias');
+        window.scrollTo({top: noticiasSec.offsetTop - 80, behavior: 'smooth'});
+    });
+    document.getElementById('navClassificacao')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection('classificacao');
+        window.scrollTo({top: classificacaoSec.offsetTop - 80, behavior: 'smooth'});
+    });
+    document.getElementById('navContato')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection('contato');
+        window.scrollTo({top: contatoSec.offsetTop - 80, behavior: 'smooth'});
+    });
+    document.getElementById('btnExplorar')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection('noticias');
+        window.scrollTo({top: noticiasSec.offsetTop - 80, behavior: 'smooth'});
+    });
+    document.getElementById('btnVerJogos')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection('classificacao');
+        window.scrollTo({top: classificacaoSec.offsetTop - 80, behavior: 'smooth'});
+    });
+
+    // Formulário de contato simples
+    const form = document.getElementById('formContato');
+    const feedback = document.getElementById('formFeedback');
+    form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nome = document.getElementById('nomeContato').value.trim();
+        const email = document.getElementById('emailContato').value.trim();
+        const msg = document.getElementById('msgContato').value.trim();
+        if(nome && email && msg) {
+            feedback.innerHTML = `<i class="fas fa-check-circle"></i> ⚽ Mensagem enviada! Retornaremos nas nuvens em breve.`;
+            feedback.style.color = "#b9ffb0";
+            form.reset();
+            setTimeout(()=>{feedback.innerHTML = '';}, 4000);
+        } else {
+            feedback.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Preencha todos os campos, jogador!`;
+            feedback.style.color = "#ffaa88";
+        }
+    });
+
+    // inicializar
+    renderNoticias();
+    renderTabela();
+    showSection('hero'); // padrão hero
+    // pré carregar imagem fallback? tudo certo
+    // pequeno extra: caso a imagem não carregue, fundo padrão
+    const styleCards = document.createElement('style');
+    styleCards.textContent = `.card-img { background-color: #0f2a3b; background-blend-mode: overlay; }`;
+    document.head.appendChild(styleCards);
+
+    // responsividade para botões click também
+    // mensagem de boas-vindas console
+    console.log("Gol nas Nuvens — site pronto para decolar no GitHub!");
+</script>
+</body>
+</html>
